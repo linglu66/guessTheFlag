@@ -36,9 +36,8 @@ struct ContentView: View {
                         self.flagTapped(number)
                     }) {
                         Image(self.countries[number]).renderingMode(.original)
-                            .clipShape(Capsule())
-                            .overlay(Capsule().stroke(Color.white,lineWidth: 1))
-//                        .shadow(color: .white, radius: 2)
+                        .applyFlagStyle()
+                            
                     }
                     .alert(isPresented: self.$showingScore){
                         Alert(title: Text(self.scoreTitle),
@@ -81,6 +80,23 @@ struct ContentView: View {
     func reset_game(){
         self.reset()
         score = 0
+    }
+}
+
+struct flagStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .clipShape(Capsule())
+        .overlay(Capsule().stroke(Color.white,lineWidth: 1))
+//       .shadow(color: .white, radius: 2)
+        
+    }
+    
+}
+
+extension View{
+    func applyFlagStyle() -> some View{
+        self.modifier(flagStyle())
     }
 }
 
